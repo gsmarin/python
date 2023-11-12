@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Path
+from api import users, courses, sections
+
 
 app = FastAPI(title="Fast API LMS",
               description="LMS for managging students and courses",
@@ -9,18 +11,6 @@ app = FastAPI(title="Fast API LMS",
               },
               license_info={"name": "GRPS"})
 
-@app.get("/user", tags=["Get"])
-async def get_user():
-    return {"message":"All done!"}
-
-
-@app.post("/user", tags=["Post"])
-async def create():
-    return {"message":"All done!"}
-
-
-@app.get("/users/{id}")
-async def get_user_by_id(
-    id: int = Path(..., description="The ID of the user you want to retrieve")
-):
-    return {}
+app.include_router(users.router)
+app.include_router(courses.router)
+app.include_router(sections.router)
